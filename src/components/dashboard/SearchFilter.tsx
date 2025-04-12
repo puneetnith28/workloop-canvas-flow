@@ -184,7 +184,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="gap-2 whitespace-nowrap">
-              <sortOptions.find(opt => opt.id === selectedSort)?.icon size={14} />
+              {React.createElement(sortOptions.find(opt => opt.id === selectedSort)?.icon || Calendar, { size: 14 })}
               <span className="hidden sm:inline">Sort: </span>
               {sortOptions.find(opt => opt.id === selectedSort)?.label}
             </Button>
@@ -199,7 +199,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
                   selectedSort === sort.id && "bg-accent"
                 )}
               >
-                <sort.icon size={16} />
+                {React.createElement(sort.icon, { size: 16 })}
                 {sort.label}
               </DropdownMenuItem>
             ))}
@@ -219,7 +219,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
                 className="cursor-pointer pl-2 flex items-center gap-1 bg-secondary text-secondary-foreground hover:bg-secondary/80"
                 onClick={() => toggleFilter(filterId)}
               >
-                <filter.icon size={12} />
+                {React.createElement(filter.icon, { size: 12 })}
                 {filter.label}
                 <X size={12} className="ml-1" />
               </Badge>

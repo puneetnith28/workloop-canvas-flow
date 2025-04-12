@@ -37,7 +37,7 @@ const mockFeedbackItems: FeedbackItem[] = [
     fileId: '1',
     fileName: 'Landing Page Design',
     fileType: 'image',
-    message: 'The contrast ratio of the text on the hero section doesn't meet WCAG standards. Consider increasing the contrast or changing the color combination.',
+    message: 'The contrast ratio of the text on the hero section doesn\'t meet WCAG standards. Consider increasing the contrast or changing the color combination.',
     category: 'accessibility',
     author: 'WorkLoop AI',
     createdAt: '2025-04-12T10:30:00',

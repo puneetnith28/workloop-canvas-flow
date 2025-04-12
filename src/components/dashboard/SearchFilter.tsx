@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Search, 
@@ -6,7 +5,7 @@ import {
   FileText, 
   Image as ImageIcon, 
   FileCode, 
-  FilePdf, 
+  File, 
   Calendar, 
   User, 
   X,
@@ -45,7 +44,7 @@ interface SortOption {
 
 const fileTypeFilters: FilterOption[] = [
   { id: 'image', label: 'Images', icon: ImageIcon },
-  { id: 'pdf', label: 'PDFs', icon: FilePdf },
+  { id: 'pdf', label: 'PDFs', icon: File },
   { id: 'text', label: 'Text', icon: FileText },
   { id: 'code', label: 'Code', icon: FileCode },
 ];

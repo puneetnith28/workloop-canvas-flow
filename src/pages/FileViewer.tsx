@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArrowLeft, Download } from 'lucide-react';
@@ -20,7 +19,19 @@ const mockVersions = [
   { id: 'v5', number: '2.1', date: '2025-04-10T11:20:00' },
 ];
 
-const mockFeedback = [
+// Define the FeedbackItem type to match the expected type in AIFeedbackPanel
+type FeedbackItemType = 'suggestion' | 'improvement' | 'warning';
+
+interface FeedbackItem {
+  id: string;
+  type: FeedbackItemType;
+  category: string;
+  title: string;
+  description: string;
+  location: string;
+}
+
+const mockFeedback: FeedbackItem[] = [
   {
     id: 'f1',
     type: 'suggestion',

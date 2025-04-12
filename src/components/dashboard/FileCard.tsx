@@ -4,7 +4,7 @@ import {
   FileText, 
   Image as ImageIcon, 
   FileCode, 
-  FilePdf, 
+  File, 
   Clock, 
   User, 
   MessageSquare,
@@ -46,7 +46,7 @@ const FileCard: React.FC<FileCardProps> = ({
   const fileTypeIcon = () => {
     switch (type) {
       case 'pdf':
-        return <FilePdf className="text-red-500" />;
+        return <File className="text-red-500" />;
       case 'image':
         return <ImageIcon className="text-blue-500" />;
       case 'code':

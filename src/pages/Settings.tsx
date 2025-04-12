@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   User, 
@@ -8,7 +7,7 @@ import {
   Globe, 
   Key, 
   Bot, 
-  Plugin, 
+  Plug, 
   Laptop, 
   BellRing,
 } from 'lucide-react';
@@ -44,7 +43,7 @@ const Settings = () => {
                   { icon: Palette, label: 'Appearance' },
                   { icon: Bell, label: 'Notifications' },
                   { icon: Bot, label: 'AI Settings' },
-                  { icon: Plugin, label: 'Integrations' },
+                  { icon: Plug, label: 'Integrations' },
                   { icon: Key, label: 'API Keys' },
                 ].map((item, i) => (
                   <Button

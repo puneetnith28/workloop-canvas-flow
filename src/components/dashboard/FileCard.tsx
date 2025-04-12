@@ -70,11 +70,16 @@ const FileCard: React.FC<FileCardProps> = ({
   };
 
   return (
-    <Card className={cn("hover:shadow-md transition-all duration-200 animate-fade-in", className)}>
+    <Card className={cn(
+      "hover:shadow-md transition-all duration-300 animate-fade-in",
+      "border border-border hover:border-workloop-purple/40",
+      "transform hover:-translate-y-1",
+      className
+    )}>
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="mt-1 p-2 bg-secondary rounded-lg">
+            <div className="mt-1 p-2 bg-secondary rounded-lg transition-colors duration-200 group-hover:bg-workloop-purple/10">
               {fileTypeIcon()}
             </div>
             
@@ -108,19 +113,19 @@ const FileCard: React.FC<FileCardProps> = ({
       </CardContent>
       
       <CardFooter className="px-4 py-3 bg-secondary/50 flex flex-wrap gap-2">
-        <Button asChild variant="ghost" size="sm" className="gap-1">
+        <Button asChild variant="ghost" size="sm" className="gap-1 transition-colors hover:bg-workloop-purple/10 hover:text-workloop-purple">
           <Link to={`/files/${id}`}>
             <ArrowLeftRight size={14} />
             <span>Compare</span>
           </Link>
         </Button>
         
-        <Button variant="ghost" size="sm" className="gap-1">
+        <Button variant="ghost" size="sm" className="gap-1 transition-colors hover:bg-workloop-purple/10 hover:text-workloop-purple">
           <RotateCcw size={14} />
           <span>Revert</span>
         </Button>
         
-        <Button asChild variant="ghost" size="sm" className="gap-1 ml-auto">
+        <Button asChild variant="ghost" size="sm" className="gap-1 ml-auto transition-colors hover:bg-workloop-purple/10 hover:text-workloop-purple">
           <Link to={`/feedback/${id}`}>
             <MessageSquare size={14} />
             <span>AI Feedback</span>

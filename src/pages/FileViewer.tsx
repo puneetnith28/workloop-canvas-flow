@@ -1,31 +1,32 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ArrowLeft, Download } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import FileDiff from '@/components/viewer/FileDiff';
-import AIFeedbackPanel from '@/components/feedback/AIFeedbackPanel';
-import CommentSystem from '@/components/comments/CommentSystem';
-import Navbar from '@/components/layout/Navbar';
-import Sidebar from '@/components/layout/Sidebar';
-import Footer from '@/components/layout/Footer';
 
-// Mock data
+import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import FileDiff from '@/components/viewer/FileDiff';
+import Sidebar from '@/components/layout/Sidebar';
+import AIFeedbackPanel from '@/components/feedback/AIFeedbackPanel';
+
+// Mock version history data
 const mockVersions = [
-  { id: 'v1', number: '1.0', date: '2025-03-15T10:30:00' },
-  { id: 'v2', number: '1.1', date: '2025-03-20T14:45:00' },
-  { id: 'v3', number: '1.2', date: '2025-03-28T09:15:00' },
-  { id: 'v4', number: '2.0', date: '2025-04-05T16:30:00' },
+  { id: 'v1', number: '1.0', date: '2025-04-08T09:15:00' },
+  { id: 'v2', number: '1.1', date: '2025-04-08T14:30:00' },
+  { id: 'v3', number: '1.5', date: '2025-04-09T10:45:00' },
+  { id: 'v4', number: '2.0', date: '2025-04-09T16:20:00' },
   { id: 'v5', number: '2.1', date: '2025-04-10T11:20:00' },
 ];
 
-// Define the FeedbackItem type to match the expected type in AIFeedbackPanel
+// Match the FeedbackItem type exactly as expected in AIFeedbackPanel
 type FeedbackItemType = 'suggestion' | 'improvement' | 'warning';
+type FeedbackCategory = 'content' | 'design' | 'accessibility' | 'performance';
 
 interface FeedbackItem {
   id: string;
   type: FeedbackItemType;
-  category: string;
+  category: FeedbackCategory;
   title: string;
   description: string;
   location: string;
@@ -36,182 +37,139 @@ const mockFeedback: FeedbackItem[] = [
     id: 'f1',
     type: 'suggestion',
     category: 'design',
-    title: 'Improve color contrast',
-    description: 'The contrast between the text and background color in the hero section doesn\'t meet accessibility standards. Consider darkening the text or lightening the background.',
-    location: 'Hero section'
+    title: 'Increase color contrast',
+    description: 'The text on the hero section has insufficient contrast with the background, making it difficult to read.',
+    location: 'Hero Section'
   },
   {
     id: 'f2',
     type: 'improvement',
     category: 'content',
-    title: 'Shorten headline for clarity',
-    description: 'Your headline could be more impactful if shortened to 8-10 words. The current length may reduce readability on mobile devices.',
-    location: 'Page header'
+    title: 'Clarify headline',
+    description: 'The main headline could be more specific about the product benefits.',
+    location: 'Header'
   },
   {
     id: 'f3',
     type: 'warning',
     category: 'accessibility',
-    title: 'Missing alt text on images',
-    description: 'Several product images are missing alternative text descriptions, which impacts screen reader users. Add descriptive alt text to all images.',
-    location: 'Product gallery'
+    title: 'Add alt text to images',
+    description: 'Several images are missing alt text, which is important for screen readers.',
+    location: 'Gallery Section'
   },
   {
     id: 'f4',
     type: 'suggestion',
     category: 'performance',
     title: 'Optimize image sizes',
-    description: 'The hero image is 2.3MB which may slow down page loading. Consider compressing it to under 300KB for better performance.',
-    location: 'Hero image'
-  },
-];
-
-const mockComments = [
-  {
-    id: 'c1',
-    author: {
-      name: 'Alex Johnson'
-    },
-    content: 'I think we should make the CTA button more prominent. Maybe use a brighter color or increase the size?',
-    timestamp: '2025-04-11T13:45:00',
-    replies: [
-      {
-        id: 'r1',
-        author: {
-          name: 'Maya Rodriguez'
-        },
-        content: 'Good point! I\'ll try a few variations and share them tomorrow.',
-        timestamp: '2025-04-11T14:20:00'
-      },
-      {
-        id: 'r2',
-        author: {
-          name: 'Jamie Lee'
-        },
-        content: 'The brand guidelines actually recommend the orange shade #FF8C42 for primary CTAs. Should we try that?',
-        timestamp: '2025-04-11T15:05:00'
-      }
-    ]
-  },
-  {
-    id: 'c2',
-    author: {
-      name: 'Chris Wong'
-    },
-    content: 'The spacing between these sections feels inconsistent with our other pages. Can we standardize to 64px?',
-    timestamp: '2025-04-11T16:30:00',
-    replies: []
+    description: 'The background image is larger than necessary and could be compressed.',
+    location: 'Background'
   }
 ];
 
 const FileViewer = () => {
-  const { id } = useParams<{ id: string }>();
-  const [currentVersionIndex, setCurrentVersionIndex] = useState(4); // Latest version
-  const [previousVersionIndex, setPreviousVersionIndex] = useState(3); // Previous version
-  const [activeTab, setActiveTab] = useState<'feedback' | 'comments'>('feedback');
+  const { id } = useParams();
+  const [leftVersion, setLeftVersion] = useState(mockVersions[3].id);
+  const [rightVersion, setRightVersion] = useState(mockVersions[4].id);
+  const [showFeedback, setShowFeedback] = useState(true);
 
-  const handleVersionChange = (current: number, previous: number) => {
-    setCurrentVersionIndex(current);
-    setPreviousVersionIndex(previous);
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
   };
-
-  // In a real app, we'd fetch the file details based on id
-  const fileDetails = {
-    id: id || '1',
-    name: 'Landing Page Design',
-    type: 'image' as const
-  };
-
-  const versionSummary = "Updated color palette and improved typography in header section";
 
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
       
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden flex">
         <main className="flex-1 overflow-auto">
-          <div className="p-4 md:p-6">
-            <div className="flex items-center mb-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                asChild
-                className="mr-2"
-              >
-                <Link to="/">
-                  <ArrowLeft size={16} className="mr-1" />
-                  Back
-                </Link>
-              </Button>
+          <div className="workloop-container">
+            <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="icon" asChild>
+                  <Link to="/">
+                    <ArrowLeft size={18} />
+                  </Link>
+                </Button>
+                <h1 className="text-2xl font-bold">File Comparison</h1>
+              </div>
               
-              <h2 className="text-lg font-semibold">{fileDetails.name}</h2>
-              
-              <Button
-                variant="outline"
-                size="sm"
-                className="ml-auto gap-1"
-              >
-                <Download size={14} />
-                Download
+              <Button variant="outline" className="gap-2">
+                <Download size={16} />
+                Export Differences
               </Button>
             </div>
-            
-            <div className="h-[calc(100vh-12rem)] border rounded-lg p-4 bg-background">
-              <FileDiff
-                fileId={fileDetails.id}
-                fileName={fileDetails.name}
-                fileType={fileDetails.type}
-                versions={mockVersions}
-                currentVersionIndex={currentVersionIndex}
-                previousVersionIndex={previousVersionIndex}
-                onVersionChange={handleVersionChange}
-              />
+
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+                <div className="w-full sm:w-auto">
+                  <label className="block text-sm mb-1">Before</label>
+                  <Select value={leftVersion} onValueChange={setLeftVersion}>
+                    <SelectTrigger className="w-full sm:w-44">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {mockVersions.map((version) => (
+                        <SelectItem key={version.id} value={version.id}>
+                          v{version.number} ({formatDate(version.date)})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="w-full sm:w-auto">
+                  <label className="block text-sm mb-1">After</label>
+                  <Select value={rightVersion} onValueChange={setRightVersion}>
+                    <SelectTrigger className="w-full sm:w-44">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {mockVersions.map((version) => (
+                        <SelectItem key={version.id} value={version.id}>
+                          v{version.number} ({formatDate(version.date)})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="flex-1"></div>
+                
+                <Button 
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                  onClick={() => setShowFeedback(!showFeedback)}
+                >
+                  {showFeedback ? 'Hide Feedback' : 'Show Feedback'}
+                </Button>
+              </div>
+              
+              <div className="bg-card shadow rounded-lg overflow-hidden">
+                <FileDiff
+                  leftTitle={`Version ${mockVersions.find(v => v.id === leftVersion)?.number}`}
+                  rightTitle={`Version ${mockVersions.find(v => v.id === rightVersion)?.number}`}
+                />
+              </div>
             </div>
           </div>
         </main>
         
-        <Sidebar title={activeTab === 'feedback' ? "AI Feedback" : "Comments"}>
-          <div className="flex border-b">
-            <button
-              className={`flex-1 py-2 px-4 text-sm font-medium text-center ${
-                activeTab === 'feedback'
-                  ? 'border-b-2 border-workloop-purple text-foreground'
-                  : 'text-muted-foreground'
-              }`}
-              onClick={() => setActiveTab('feedback')}
-            >
-              Feedback
-            </button>
-            <button
-              className={`flex-1 py-2 px-4 text-sm font-medium text-center ${
-                activeTab === 'comments'
-                  ? 'border-b-2 border-workloop-purple text-foreground'
-                  : 'text-muted-foreground'
-              }`}
-              onClick={() => setActiveTab('comments')}
-            >
-              Comments
-            </button>
-          </div>
-          
-          <div className="p-4">
-            {activeTab === 'feedback' ? (
-              <AIFeedbackPanel
-                fileId={fileDetails.id}
-                fileName={fileDetails.name}
-                feedbackItems={mockFeedback}
-              />
-            ) : (
-              <CommentSystem
-                fileId={fileDetails.id}
-                comments={mockComments}
-              />
-            )}
-          </div>
-        </Sidebar>
+        {showFeedback && (
+          <Sidebar title="AI Feedback" position="right" initialExpanded={true}>
+            <div className="p-4">
+              <AIFeedbackPanel feedbackItems={mockFeedback} />
+            </div>
+          </Sidebar>
+        )}
       </div>
       
-      <Footer versionSummary={versionSummary} />
+      <Footer />
     </div>
   );
 };

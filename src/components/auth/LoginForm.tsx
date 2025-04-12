@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   LogIn,
   Mail,
@@ -28,19 +28,26 @@ interface LoginFormProps {
   onLogin?: (email: string, password: string) => void;
   onRegister?: (name: string, email: string, password: string) => void;
   className?: string;
+  initialTab?: 'login' | 'register';
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
   onLogin,
   onRegister,
   className,
+  initialTab = 'login',
 }) => {
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Update active tab if initialTab prop changes
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -160,7 +167,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-workloop-purple hover:bg-workloop-dark-purple"
+                    className="w-full bg-workloop-purple hover:bg-workloop-dark-purple transition-colors animate-fade-in"
                   >
                     {loading ? "Signing in..." : "Sign In"}
                   </Button>
@@ -225,7 +232,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-workloop-purple hover:bg-workloop-dark-purple"
+                    className="w-full bg-workloop-purple hover:bg-workloop-dark-purple transition-colors animate-fade-in"
                   >
                     {loading ? "Creating account..." : "Create Account"}
                   </Button>
@@ -245,11 +252,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 animate-fade-in" style={{animationDelay: "0.1s"}}>
             <Button
               variant="outline"
               onClick={() => handleSocialLogin('google')}
-              className="w-full"
+              className="w-full transition-all hover:bg-secondary"
               type="button"
             >
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -276,7 +283,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
             <Button
               variant="outline"
               onClick={() => handleSocialLogin('github')}
-              className="w-full"
+              className="w-full transition-all hover:bg-secondary"
               type="button"
             >
               <Github className="mr-2 h-4 w-4" />
@@ -286,12 +293,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
         </CardContent>
         
         <CardFooter className="flex justify-center text-sm text-muted-foreground">
-          By continuing, you agree to our{" "}
-          <Link to="/terms" className="underline ml-1 mr-1">
+          <Link to="/" className="hover:text-foreground transition-colors mr-1">Back to home</Link>
+          •
+          <Link to="/terms" className="hover:underline ml-1 mr-1">
             Terms of Service
           </Link>
-          and{" "}
-          <Link to="/privacy" className="underline ml-1">
+          •
+          <Link to="/privacy" className="hover:underline ml-1">
             Privacy Policy
           </Link>
         </CardFooter>

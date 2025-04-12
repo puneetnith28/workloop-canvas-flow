@@ -31,7 +31,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-background to-secondary/20">
       <Navbar />
       
       <main className="flex-1">
@@ -47,13 +47,13 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
               <Button
                 onClick={handleUpload}
-                className="gap-2 bg-workloop-purple hover:bg-workloop-dark-purple"
+                className="gap-2 bg-gradient-purple hover:bg-workloop-dark-purple"
               >
                 <Upload size={16} />
                 Upload File
               </Button>
               
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2 border-workloop-purple/30 hover:border-workloop-purple">
                 <PlusCircle size={16} />
                 New Project
               </Button>
@@ -73,7 +73,7 @@ const Index = () => {
             </div>
             
             <div className="hidden md:block md:col-span-2">
-              <div className="rounded-lg border shadow-sm p-4">
+              <div className="gradient-panel p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-medium">Storage</h3>
                   <Button variant="ghost" size="sm" className="h-8 px-2">
@@ -89,7 +89,7 @@ const Index = () => {
                 </div>
                 
                 <div className="w-full h-2 bg-secondary rounded-full overflow-hidden">
-                  <div className="bg-workloop-purple h-full w-1/4 rounded-full" />
+                  <div className="bg-gradient-purple h-full w-1/4 rounded-full" />
                 </div>
               </div>
               
@@ -101,7 +101,7 @@ const Index = () => {
                   {[1, 2, 3].map((i) => (
                     <div 
                       key={i} 
-                      className="text-sm p-3 rounded-md border bg-secondary/30"
+                      className="text-sm p-3 rounded-md border bg-gradient-to-br from-white/80 to-secondary/30 dark:from-gray-900/80 dark:to-gray-800/30"
                     >
                       <p className="font-medium">File updated</p>
                       <p className="text-xs text-muted-foreground mt-1">

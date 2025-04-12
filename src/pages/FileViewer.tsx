@@ -72,6 +72,7 @@ const FileViewer = () => {
   const [leftVersion, setLeftVersion] = useState(mockVersions[3].id);
   const [rightVersion, setRightVersion] = useState(mockVersions[4].id);
   const [showFeedback, setShowFeedback] = useState(true);
+  const fileName = "Landing Page Design"; // Mock file name
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString('en-US', {
@@ -83,7 +84,7 @@ const FileViewer = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-background to-secondary/20">
       <Navbar />
       
       <div className="flex-1 overflow-hidden flex">
@@ -99,7 +100,7 @@ const FileViewer = () => {
                 <h1 className="text-2xl font-bold">File Comparison</h1>
               </div>
               
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="gap-2 border-workloop-purple/30 hover:border-workloop-purple">
                 <Download size={16} />
                 Export Differences
               </Button>
@@ -143,18 +144,15 @@ const FileViewer = () => {
                 
                 <Button 
                   variant="outline"
-                  className="w-full sm:w-auto"
+                  className="w-full sm:w-auto border-workloop-purple/30 hover:border-workloop-purple"
                   onClick={() => setShowFeedback(!showFeedback)}
                 >
                   {showFeedback ? 'Hide Feedback' : 'Show Feedback'}
                 </Button>
               </div>
               
-              <div className="bg-card shadow rounded-lg overflow-hidden">
-                <FileDiff
-                  leftTitle={`Version ${mockVersions.find(v => v.id === leftVersion)?.number}`}
-                  rightTitle={`Version ${mockVersions.find(v => v.id === rightVersion)?.number}`}
-                />
+              <div className="gradient-panel overflow-hidden">
+                <FileDiff />
               </div>
             </div>
           </div>
@@ -163,7 +161,11 @@ const FileViewer = () => {
         {showFeedback && (
           <Sidebar title="AI Feedback" position="right" initialExpanded={true}>
             <div className="p-4">
-              <AIFeedbackPanel feedbackItems={mockFeedback} />
+              <AIFeedbackPanel 
+                feedbackItems={mockFeedback}
+                fileId={id || '1'}
+                fileName={fileName} 
+              />
             </div>
           </Sidebar>
         )}

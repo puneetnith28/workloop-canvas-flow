@@ -57,6 +57,20 @@ const FileCard: React.FC<FileCardProps> = ({
     }
   };
 
+  const getCardGradient = () => {
+    switch (type) {
+      case 'pdf':
+        return 'from-red-500/5 to-orange-500/5';
+      case 'image':
+        return 'from-blue-500/5 to-purple-500/5';
+      case 'code':
+        return 'from-green-500/5 to-teal-500/5';
+      case 'text':
+      default:
+        return 'from-yellow-500/5 to-amber-500/5';
+    }
+  };
+
   const formatDate = (date: string | Date) => {
     if (typeof date === 'string') {
       date = new Date(date);
@@ -74,19 +88,20 @@ const FileCard: React.FC<FileCardProps> = ({
       "hover:shadow-md transition-all duration-300 animate-fade-in",
       "border border-border hover:border-workloop-purple/40",
       "transform hover:-translate-y-1",
+      `bg-gradient-to-br ${getCardGradient()}`,
       className
     )}>
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="mt-1 p-2 bg-secondary rounded-lg transition-colors duration-200 group-hover:bg-workloop-purple/10">
+            <div className="mt-1 p-2 bg-white/40 dark:bg-gray-800/40 rounded-lg transition-colors duration-200 group-hover:bg-workloop-purple/10">
               {fileTypeIcon()}
             </div>
             
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <h3 className="font-medium text-base line-clamp-1">{name}</h3>
-                <Badge variant="outline" className="text-xs">v{version}</Badge>
+                <Badge variant="outline" className="text-xs bg-white/30 dark:bg-gray-800/30">v{version}</Badge>
               </div>
               
               <p className="text-sm text-muted-foreground line-clamp-2">{changeSummary}</p>
@@ -112,7 +127,7 @@ const FileCard: React.FC<FileCardProps> = ({
         </div>
       </CardContent>
       
-      <CardFooter className="px-4 py-3 bg-secondary/50 flex flex-wrap gap-2">
+      <CardFooter className="px-4 py-3 bg-white/20 dark:bg-gray-800/20 flex flex-wrap gap-2">
         <Button asChild variant="ghost" size="sm" className="gap-1 transition-colors hover:bg-workloop-purple/10 hover:text-workloop-purple">
           <Link to={`/files/${id}`}>
             <ArrowLeftRight size={14} />

@@ -14,7 +14,7 @@ const Footer: React.FC<FooterProps> = ({
 }) => {
   return (
     <footer className={cn(
-      "border-t border-border py-3 bg-background/80 backdrop-blur-md",
+      "border-t border-border py-3 bg-gradient-to-t from-secondary/30 to-background/80 backdrop-blur-md",
       className
     )}>
       <div className="workloop-container flex flex-col sm:flex-row justify-between items-center gap-2">
@@ -23,7 +23,7 @@ const Footer: React.FC<FooterProps> = ({
         </div>
         
         {versionSummary && (
-          <div className="flex items-center gap-2 text-sm px-3 py-1.5 bg-secondary rounded-full">
+          <div className="flex items-center gap-2 text-sm px-3 py-1.5 bg-gradient-to-r from-white/50 to-secondary/30 dark:from-gray-900/50 dark:to-gray-800/30 rounded-full">
             <Sparkles size={14} className="text-workloop-purple" />
             <span>{versionSummary}</span>
           </div>

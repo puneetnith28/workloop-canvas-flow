@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,13 +62,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-                workloop: {
-                    purple: '#9b87f5',
-                    'dark-purple': '#7E69AB',
-                    'soft-gray': '#F1F0FB',
-                    'neutral-gray': '#8E9196',
-                    'bright-blue': '#1EAEDB',
-                }
+				workloop: {
+					purple: '#9b87f5',
+					'dark-purple': '#7E69AB',
+					'soft-gray': '#F1F0FB',
+					'neutral-gray': '#8E9196',
+					'bright-blue': '#1EAEDB',
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -93,31 +92,38 @@ export default {
 						height: '0'
 					}
 				},
-                'fade-in': {
-                    '0%': {
-                        opacity: '0',
-                        transform: 'translateY(10px)'
-                    },
-                    '100%': {
-                        opacity: '1',
-                        transform: 'translateY(0)'
-                    }
-                },
-                'slide-in-right': {
-                    '0%': { transform: 'translateX(100%)' },
-                    '100%': { transform: 'translateX(0)' }
-                },
-                'slide-in-left': {
-                    '0%': { transform: 'translateX(-100%)' },
-                    '100%': { transform: 'translateX(0)' }
-                }
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'slide-in-right': {
+					'0%': { transform: 'translateX(100%)' },
+					'100%': { transform: 'translateX(0)' }
+				},
+				'slide-in-left': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(0)' }
+				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-                'fade-in': 'fade-in 0.3s ease-out',
-                'slide-in-right': 'slide-in-right 0.3s ease-out',
-                'slide-in-left': 'slide-in-left 0.3s ease-out'
+				'fade-in': 'fade-in 0.3s ease-out',
+				'slide-in-right': 'slide-in-right 0.3s ease-out',
+				'slide-in-left': 'slide-in-left 0.3s ease-out'
+			},
+			backgroundImage: {
+				'gradient-purple': 'linear-gradient(135deg, #9b87f5 0%, #7E69AB 100%)',
+				'gradient-blue': 'linear-gradient(90deg, hsla(221, 45%, 73%, 1) 0%, hsla(220, 78%, 29%, 1) 100%)',
+				'gradient-orange': 'linear-gradient(90deg, hsla(39, 100%, 77%, 1) 0%, hsla(22, 90%, 57%, 1) 100%)',
+				'gradient-green': 'linear-gradient(90deg, hsla(59, 86%, 68%, 1) 0%, hsla(134, 36%, 53%, 1) 100%)',
+				'gradient-pink': 'linear-gradient(90deg, hsla(277, 75%, 84%, 1) 0%, hsla(297, 50%, 51%, 1) 100%)',
 			}
 		}
 	},

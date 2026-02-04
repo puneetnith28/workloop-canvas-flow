@@ -173,7 +173,7 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-workloop-purple rounded-md flex items-center justify-center">
               <span className="text-white font-bold">W</span>
             </div>
-            <span className="font-bold text-lg">WorkLoop</span>
+            <span className="font-extrabold text-3xl md:text-4xl text-workloop-purple">WorkLoop</span>
           </Link>
 
           {/* Desktop Menu */}

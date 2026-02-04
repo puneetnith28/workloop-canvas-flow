@@ -2,6 +2,19 @@
 
 AI-powered version control, feedback, and collaboration for creative teams.
 
+## Table of Contents
+
+- Overview
+- Features
+- Quick Start
+- Development
+- Project Structure
+- Available Scripts
+- Tech Stack
+- Core Components
+- Contributing
+- License
+
 
 ## Overview
 

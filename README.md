@@ -1,6 +1,6 @@
-# Welcome to your Lovable project
+# Welcome WorkLoop
 
-## Project info
+## Project information 
 
 **URL**: https://lovable.dev/projects/e4f9fa5b-55a4-421a-b13e-ca55f749df2c
 

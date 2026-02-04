@@ -48,7 +48,7 @@ const Landing = () => {
       <section className="py-16 md:py-20 bg-gradient-to-b from-background to-secondary/20">
         <div className="workloop-container text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
-            AI-Powered Version Control
+            AI-Powered Version
             <br /> 
             <span className="gradient-text">for Creatives</span>
           </h1>
